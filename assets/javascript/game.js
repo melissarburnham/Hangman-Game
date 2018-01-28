@@ -20,23 +20,43 @@ console.log(chosenWord);
 var generateUnderscore = () => {
 	for (var i = 0; i < chosenWord.length; i++) {
 		underScore.push('_'); 
+		docUnderscore[0].innerHTML = underScore.join('');
 	}
 	return underScore;
 }
 
-console.log(generateUnderscore());
-
-
 //User presses key to guess
-    document.addEventListener('keypress', (event) => {
-    	var keyCode = event.keyCode;
-    	var keyLetter = String.fromCharCode(keyCode);
-
-//if users guess is right
+	document.addEventListener('keypress', (event) => {
+		var keyCode = event.keyCode;
+		var keyLetter = String.fromCharCode(keyCode);
+		console.log(keyLetter);
+	//if users guess is right
     	if(chosenWord.indexOf(keyLetter) > -1) {
-    		//add to right letter array
+    //push to right letter array
     		rightLetter.push(keyLetter);
+    //replace underscore with right letter
+    		underScore[chosenWord.indexOf(keyLetter)] = keyLetter;
+    //check to see if word matches guesses
+    		if(underScore.join('') == chosenWord) {
+    			alert("You Win!");
+    			console.log(underScore); 
+    		}		
+    	
+    //push wrong guesses to wrong letter array		
+    	}
+
+    	else{
+    		wrongLetter.push(keyLetter);
+    		console.log(wrongLetter);
+    	}
+
+	});
+
+    
+
     		
+
+   
 
     		//replace underscore with right letter
     		// underScore[chosenWord.indexOf(keyLetter)] = keyLetter
