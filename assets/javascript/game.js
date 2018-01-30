@@ -20,43 +20,43 @@ console.log(chosenWord);
 var generateUnderscore = () => {
 	for (var i = 0; i < chosenWord.length; i++) {
 		underScore.push('_'); 
-		docUnderscore[0].innerHTML = underScore.join('');
+		// docUnderscore[0].innerHTML = underScore.join('');
 	}
-	return underScore;
 }
 
+generateUnderscore();
+
 //User presses key to guess
-	document.addEventListener('keypress', (event) => {
-		var keyCode = event.keyCode;
-		var keyLetter = String.fromCharCode(keyCode);
-		console.log(keyLetter);
+document.addEventListener('keypress', (event) => {
+	var keyCode = event.keyCode;
+	var keyLetter = String.fromCharCode(keyCode);
+	console.log(keyLetter);
+	console.log(underScore);
 	//if users guess is right
-    	if(chosenWord.indexOf(keyLetter) > -1) {
+    if(chosenWord.indexOf(keyLetter) > -1) {
     //push to right letter array
-    		rightLetter.push(keyLetter);
+		rightLetter.push(keyLetter);
     //replace underscore with right letter
-    		underScore[chosenWord.indexOf(keyLetter)] = keyLetter;
+    	var letterPosition = chosenWord.indexOf(keyLetter);
+    	if (underScore[letterPosition] !== '_') {
+
+    	 letterPosition = chosenWord.indexOf(keyLetter, letterPosition+1);
+    	}
+		
     //check to see if word matches guesses
-    		if(underScore.join('') == chosenWord) {
+		if(underScore.join('') == chosenWord) {
     			alert("You Win!");
     			console.log(underScore); 
     		}		
-    	
-    //push wrong guesses to wrong letter array		
+    		
     	}
-
+    	//push wrong guesses to wrong letter array
     	else{
     		wrongLetter.push(keyLetter);
     		console.log(wrongLetter);
     	}
 
 	});
-
-    
-
-    		
-
-   
 
     		//replace underscore with right letter
     		// underScore[chosenWord.indexOf(keyLetter)] = keyLetter
