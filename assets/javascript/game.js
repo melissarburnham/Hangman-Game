@@ -2,77 +2,280 @@
 
 var wordBank = ["South Carolina", "North Carolina", "Georgia","Virginia", "New Jersey", "Connecticut", "Massachusetts", "Rhode Island", "Maryland", "Delaware", "New Hampshire", "New York", "Pennsylvania"];
 
-var randomWord = Math.floor(Math.random() * wordBank.length);
-var rightLetter = [];
-var wrongLetter = [];
+var winCount = 0;
+var lossCount = 0;
+var guessesRemaining = 13;
+var hangmanWord = "";
 var underScore = [];
-var chosenWord = wordBank[randomWord];
-var lettersInChosenWord = [];
-var winTracker = 0;
-var lossTracker = 0;
-var guessesRemain = 13;
-var lettersguessed = [];
-var guess = [];
-var letters = chosenWord.split("");
-var blanksAndSuccesses = [];
+var lettersGuessed = [];
 
 
 
-//picks word randomly from bank
-function wordChoice() {
 
-	var chosenWord = wordBank[randomWord];
-	console.log(chosenWord);
+//increment user win
+function incrementWinCount () {
+	winCount++;
 }
 
-//splits word and assigns underscore
-function assignUnderscore(guess) {
+//increment user loss
+function incrementLossCount () {
+	lossCount++;
+}
 
-	var letters = chosenWord.split("");
-	var underScore = letters.length;
-	
-	for (i = 0; i < chosenWord.length; i++){
-		guess.push('_');
+//decrement guesses remaining
+function decrememntGuessesRemaining (){
+	guessesRemaining--;
+}
+
+//test if the user won
+function didUserWin() {
+	var underScoreString = underScore.join("");
+	 if (underScoreString === hangmanWord) {
+		 return true;
+	 } else {
+		 return false;
+	 }
+}
+//test if the user lost
+function didUserLose(){
+	if (guessesRemaining === 0){
+		return true;
+	} else {
+		return false;
 	}
-
-	document.getElementById("word").innerHTML = guess.join(" ");
-	document.getElementById("guessesRemain").innerHTML = guessesRemain
-
+}
+//choose hangman word from wordbank
+function chooseHangmanWord () {
+	var index = Math.floor(Math.random() * wordBank.length);
+	hangmanWord = wordBank[index];
 }
 
-function checkLetter (){
-	var letterCheck = true;
-	// If the letter exists somewhere in the word, then figure out exactly where (which indices).
-	if (letterCheck) {
-		// Loop through the word.
-		for (var j = 0; j < chosenWord.length; j++) {
-		// Populate the underScores with every instance of the letter.
-		if (chosenWord[j] === letters) {
-		// Here we set the specific space in blanks and letter equal to the letter when there is a match.
-			guess[j].push(letters);
-				}
-			else {
-				wrongLetter.push(letters);
-				guessesRemain--;		
-			}	
+//replace underscore with letter 
+function replaceUnderscore(userGuess) {
+
+for (var i = 0; i < hangmanWord.length; i++) {	
+		if (userGuess === hangmanWord[i]) {
+			underScore[i] = userGuess;
 		}
 	}
-	console.log(guess);
-};
+}
 
+//test if guess was a match
+function isUserGuessCorrect(userGuess) {
+	if ( hangmanWord.indexOf(userGuess) !== -1 ) {
+		return true;
+		// cal replace underscore with userGuess
+	} else {
+		return false;
+	}
+}
 
+//create underscore word (after wordbank word chosen)
 
+function createUnderscore (){
+	var underScoreArray = [];
+	for (var i = 0; i < hangmanWord.length; i++) {
+		underScoreArray.push("_");
+	}
+	underScore = underScoreArray;
+}
 
+function addToLettersGuessed (userGuess) {
+	lettersGuessed.push(userGuess);
+}
 
-document.addEventListener('keypress', (event) => {
-	var keyCode = event.keyCode;
-	var keyLetter = String.fromCharCode(keyCode);
-	console.log(keyLetter);
-	console.log(underScore);
+//screens out duplicate guesses
+function isGuessValid(userGuess) {
+	if (underScore.indexOf(userGuess) === -1 && 
+		lettersGuessed.indexOf(userGuess) === -1)
+	{
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function newRound() {
+	guessesRemaining = 13;
+	lettersGuessed = [];
+	chooseHangmanWord();
+	createUnderscore();
+	updateBrowserWindow()
+}
+
+function updateBrowserWindow() {
+	document.getElementById("wins").innerHTML = winCount;
+	document.getElementById("losses").innerHTML = lossCount;
+	document.getElementById("guessesRemain").innerHTML = guessesRemaining;
+	document.getElementById("currentWord").innerHTML = underScore;
+	document.getElementById("lettersGuessed").innerHTML = lettersGuessed;
+}
+
+function isGuessALetter (userGuess){
+	var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+
+	if ( alphabet.indexOf(userGuess) !== -1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+//manage game play logic -- shots caller
+function gamePlayEngine(userGuess) {
+
+	//is user guess a letter
+	if (isGuessALetter(userGuess))  {
+
+		//if so, is user guess previously guessed
+		if (isGuessValid(userGuess)) {
+
+			//is guess correct
+			if (isUserGuessCorrect(userGuess)) {
+				
+				//repace under score 
+				replaceUnderscore(userGuess);
+				updateBrowserWindow();
+			} else { //user guess was wrong
+				
+				//add letter to array
+				addToLettersGuessed(userGuess);
+				decrememntGuessesRemaining();
+				updateBrowserWindow();
+			}	
+		}
+	} 
+	//test if user won
+	if (didUserWin()) {
+		incrementWinCount();
+		console.log("You won this round! Try again!");
+		newRound();
+	}
+	//test if user lost
+	if (didUserLose()) {
+		incrementLossCount();
+		console.log("You lost! Try again!");
+		newRound();
+	}
+}	
+
+newRound();
+//document.addEventListener
+
+document.addEventListener('keyup', function(event) {
+	var userGuess = event.key;
+
+	gamePlayEngine(userGuess);
 });
-wordChoice ();
-assignUnderscore (guess);
-checkLetter(blanksAndSuccesses);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var randomWord = Math.floor(Math.random() * wordBank.length);
+// var rightLetter = [];
+// var wrongLetter = [];
+// var chosenWord = wordBank[randomWord];
+// var lettersInChosenWord = [];
+// var winTracker = 0;
+// var lossTracker = 0;
+// var guessesRemain = 13;
+// var lettersguessed = [];
+// var guess = [];
+// var letters = chosenWord.split("");
+// var blanksAndSuccesses = [];
+// var underScore = letters.length;
+
+
+
+// //splits word and assigns underscore
+// function assignUnderscore(guess) {
+// 	for (i = 0; i < chosenWord.length; i++){
+// 		guess.push('_');
+// 	}
+
+// 	document.getElementById("word").innerHTML = guess.join(" ");
+// 	document.getElementById("guessesRemain").innerHTML = guessesRemain
+// 	console.log(chosenWord);
+// };
+
+// function checkLetter(letterGuessed){
+
+// 	if (chosenWord.indexOf(underScore) > -1){
+// 	var lettersInWord = false;
+	
+// 	for(var i = 0; i < underScore; i++){
+// 		if(chosenWord[i]===letters){
+// 			lettersInWord = true;
+// 		}
+// 	}	
+// }	
+// 	console.log(letters);
+
+// };
+
+// document.addEventListener('keypress', (event) => {
+// 	var keyCode = event.keyCode;
+// 	var keyLetter = String.fromCharCode(keyCode);
+// 	console.log(keyLetter);
+// 	console.log(underScore);
+// 	assignUnderscore (guess);
+// 	checkLetter(keyLetter);
+// })
+
+
+
+
+// var letterCheck = true;
+	// // If the letter exists somewhere in the word, then figure out exactly where (which indices).
+	// if (letterCheck) {
+	// 	// Loop through the word.
+	// 	for (var j = 0; j < chosenWord.length; j++) {
+	// 	// Populate the underScores with every instance of the letter.
+	// 	if (chosenWord[j] === letters) {
+	// 	// Here we set the specific space in blanks and letter equal to the letter when there is a match.
+	// 		guess[j].push(letters);
+	// 			}
+	// 		else {
+	// 			wrongLetter.push(letters);
+	// 			guessesRemain--;		
+	// 		}	
+	// 	}
+	// }
+	// console.log(guess);
+
+
+
+	
+
+
+	// if(letterInWord){
+	// 	for(i = 0; i < underScore; i++){
+	// 		if(chosenWord[i] === letter){
+	// 			guess[i] = letter;
+	// 			}
+	// 		}	
+	// 	} 
+			
+	// 		else{
+	// 		guessesRemain --;
+	// 		wrongLetter.push(letter);	
+
+
+
+
 
 
 // function startGame (){
