@@ -4,7 +4,14 @@ h2 {
 	font-family: 'Helvetica';
 }
 
+#getStarted {
+	text-align: center;
+}
+
+.currentWord {
+	text-align: center;
+}
 
 body {
-	background-color: blue;
+	background-image: url("../images/flag.jpg");
 }
