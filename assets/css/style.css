@@ -1,11 +1,14 @@
-h1,
-h2 {
+.container-fluid{
 	text-align: center;
 	font-family: 'Helvetica';
+	background: rgba(11, 8, 34, 0.562);
+	color: whitesmoke;
 }
 
-#getStarted {
+.getStartedDiv {
 	text-align: center;
+	background: rgba(155, 120, 3, 0.411);
+	color: whitesmoke;
 }
 
 .currentWord {
