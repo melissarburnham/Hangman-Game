@@ -1,20 +1,43 @@
+html, h1, h2 {
+	font-family: 'Shadows Into Light', cursive;
+	font-family: 'Tangerine', cursive;
+}
+
+h1{
+	font-size: 5em;
+}
+
+h2{
+	font-size: 4em;
+}
+
 .container-fluid{
 	text-align: center;
 	font-family: 'Helvetica';
-	background: rgba(11, 8, 34, 0.562);
+	background: rgba(78, 32, 5, 0.493);
 	color: whitesmoke;
+	
 }
 
-.getStartedDiv {
+.getStartedDiv, .currentWord {
 	text-align: center;
 	background: rgba(155, 120, 3, 0.411);
 	color: whitesmoke;
+	font-size: 3em;
+	line-height: 20px; 
 }
 
-.currentWord {
-	text-align: center;
+.currentWord{
+	font-size: 4em;
 }
 
 body {
 	background-image: url("../images/flag.jpg");
+}
+
+.information {
+	background-color: rgba(19, 15, 2, 0.411);
+	color: white;
+	font-size: 3em;
+	line-height: 25px; 
 }
