@@ -20,11 +20,19 @@ var underScore = [];
 var winCount = 0;
 var lossCount = 0;
 var lettersGuessed = [];
-var images =[ "<img src='assets/images/delaware.jpg'>",
-  "<img src='assets/images/southcarolina.jpg'>",
-  "<img src='assets/images/northcarolina.jpeg'>",
+var images =[ "<img src='assets/images/connecticut.jpg'>",
+  "<img src='assets/images/delaware.jpg'>",
+  "<img src='assets/images/georgia.jpeg'>",
+  "<img src='assets/images/maryland.jpg'>",
+  "<img src='assets/images/Massachusetts.jpg'>",
+  "<img src='assets/images/Newhampshire.jpg'>",
+  "<img src='assets/images/newjersey.jpg'>",
   "<img src='assets/images/newyork.jpg'>",
-  "<img src='assets/images/rhodeisland.jpg'>"] 
+  "<img src='assets/images/northcarolina.jpeg'>",
+  "<img src='assets/images/pennsylvania.jpg'>",
+  "<img src='assets/images/rhodeisland.jpg'>",
+  "<img src='assets/images/southcarolina.jpg'>",
+  "<img src='assets/images/virginia.jpg'>"] 
 
 //choose hangman word from wordbank
 function chooseHangmanWord () {
@@ -132,36 +140,57 @@ function alertLoss (){
 }
 
 function addPicture(){
-	if(didUserWin() && chooseHangmanWord()==="Delaware"){
-	 	document.write("<img src='assets/images/delaware.jpg'>");
+	if(didUserWin() && hangmanWord==="Connecticut"){
+		 document.getElementById("getStarted").innerHTML = images[0];
 	}
-	document.getElementById("getStarted").innerHTML = images[0];
-	
 
-	if(didUserWin() && chooseHangmanWord()==="South Carolina"){
-		document.write("<img src='assets/images/southcarolina.jpg'>");
-	}	
+	if(didUserWin() && hangmanWord==="Delaware"){
 		document.getElementById("getStarted").innerHTML = images[1];
+	}	
 	
-	   
-
-	// if(didUserWin() && chooseHangmanWord()==="North Carolina"){
-	// 	document.write("<img src='assets/images/northcarolina.jpg'>");
-	// 	document.getElementById("getStarted").innerHTML = ncImg;   
-	// };
+	if(didUserWin() && hangmanWord==="Georgia"){
+		document.getElementById("getStarted").innerHTML = images[2];   
+	};
 	
+	if(didUserWin() && hangmanWord==="Maryland"){
+		document.getElementById("getStarted").innerHTML = images[3]; 
+   };
 
-	// if(didUserWin() && chooseHangmanWord()==="Rhode Island"){
-	// 	document.write("<img src='assets/images/rhodeisland.jpg'>");
-	// 	document.getElementById("getStarted").innerHTML = riImg;
-	//    }; 
-	  
+	if(didUserWin() && hangmanWord==="Massachusetts"){
+	document.getElementById("getStarted").innerHTML = images[4];
+	}; 
 
-	// if(didUserWin() && chooseHangmanWord()==="New York"){
-	// 	 document.write("<img src='assets/images/newyork.jpg'>");
-	// 	 document.getElementById("getStarted").innerHTML = nyImg; 
-	// };
-	  
+	if(didUserWin() && hangmanWord==="New Hampshire"){
+	document.getElementById("getStarted").innerHTML = images[5];
+	};    
+
+	if(didUserWin() && hangmanWord==="New Jersey"){
+		document.getElementById("getStarted").innerHTML = images[6];
+		};  
+
+	if(didUserWin() && hangmanWord==="New York"){
+	document.getElementById("getStarted").innerHTML = images[7];
+	};    
+
+	if(didUserWin() && hangmanWord==="North Carolina"){
+	document.getElementById("getStarted").innerHTML = images[8];
+	};   
+
+	if(didUserWin() && hangmanWord==="Pennsylvania"){
+	document.getElementById("getStarted").innerHTML = images[9];
+	};
+
+	if(didUserWin() && hangmanWord==="Rhode Island"){
+	document.getElementById("getStarted").innerHTML = images[10];
+	};
+	
+	if(didUserWin() && hangmanWord==="South Carolina"){
+	document.getElementById("getStarted").innerHTML = images[11];
+	};
+	
+	if(didUserWin() && hangmanWord==="Virginia"){
+	document.getElementById("getStarted").innerHTML = images[12];
+	};
 }
 
 function newRound() {
@@ -230,19 +259,4 @@ document.addEventListener('keyup', function(event) {
 	startGame(userGuess);
 });
 
-
-//need to do
-	//when user wins
-		//keep word up
-		//add picture and song
-			//keep song playing throughout next round	
-
-	
-// //adds picture with win
-// function createPicture (src, width, height, alt){
-// 	img.src = src;
-// 	img.width = width;
-// 	img.height = height;
-// 	img.alt = alt;
-// }
 
