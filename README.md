@@ -2,11 +2,11 @@
 
 Click [here](https://melissarburnham.github.io/Hangman-Game/) for a live version of the game! 
 
-##Description
+## Description
 
 Use of Javascript, HTML, and CSS 
 
-##Game Rules
+## Game Rules
 
 Regular Hangman rules
 
